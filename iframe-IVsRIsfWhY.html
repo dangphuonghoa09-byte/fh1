@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ceshi </title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <!-- 添加基础标签，防止相对链接跳出 -->
+    <base target="_self">
+</head>
+<body>
+    <iframe id="frame_04dbe387" name="frame_04dbe387" src="https://www.ohltk.com/" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+    
+    <script>
+        // 等待iframe加载完成
+        document.getElementById('frame_04dbe387').onload = function() {
+            try {
+                // 尝试访问iframe内容（跨域可能会失败）
+                var frame = this;
+                var frameDoc = frame.contentDocument || frame.contentWindow.document;
+                
+                // 如果能访问内容，修改所有链接目标
+                if (frameDoc) {
+                    // 添加基础标签，确保所有相对链接都在iframe内打开
+                    var baseTag = document.createElement('base');
+                    baseTag.target = 'frame_04dbe387';
+                    frameDoc.head.appendChild(baseTag);
+                    
+                    // 修改所有链接，确保在iframe内打开
+                    var links = frameDoc.getElementsByTagName('a');
+                    for (var i = 0; i < links.length; i++) {
+                        links[i].target = 'frame_04dbe387';
+                    }
+                }
+            } catch(e) {
+                // 跨域错误，无法修改内容（这是正常的）
+                console.log('跨域限制，无法修改链接行为');
+            }
+        };
+    </script>
+</body>
+</html>
