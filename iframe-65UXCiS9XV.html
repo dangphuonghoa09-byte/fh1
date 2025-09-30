@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self';">
+    <title>临时通道123</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="content" src="https://www.ohltk.com/" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+    <script>
+        // 防止页面被顶层导航劫持
+        if (window.top !== window.self) {
+            try {
+                window.top.location = window.self.location;
+            } catch(e) {}
+        }
+        
+        // 监听 iframe 加载完成
+        var iframe = document.getElementById('content');
+        iframe.onload = function() {
+            try {
+                // 尝试拦截 iframe 内的链接点击（同源才能访问）
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDoc) {
+                    iframeDoc.addEventListener('click', function(e) {
+                        var target = e.target;
+                        // 查找最近的 a 标签
+                        while (target && target.tagName !== 'A') {
+                            target = target.parentElement;
+                        }
+                        if (target && target.tagName === 'A') {
+                            // 移除 target 属性，强制在当前iframe内打开
+                            target.removeAttribute('target');
+                        }
+                    }, true);
+                }
+            } catch(e) {
+                // 跨域情况下无法访问，忽略错误
+                console.log('Cross-origin iframe, cannot intercept clicks');
+            }
+        };
+    </script>
+</body>
+</html>
