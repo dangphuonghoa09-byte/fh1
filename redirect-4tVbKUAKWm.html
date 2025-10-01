@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>临时通道1</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #4c6ef5 0%, #6d5dfc 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon svg {
+            width: 40px;
+            height: 40px;
+            fill: #a5f3fc;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .instruction {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .btn {
+            display: inline-block;
+            background: #a78bfa;
+            color: white;
+            text-decoration: none;
+            padding: 12px 40px;
+            border-radius: 100px;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:active {
+            transform: translateY(2px);
+        }
+        .url {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            word-break: break-all;
+            margin-top: 20px;
+        }
+        .guide {
+            margin-top: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 15px;
+            position: relative;
+        }
+        .arrow {
+            position: absolute;
+            top: -30px;
+            right: 30px;
+            transform: rotate(20deg);
+        }
+        .arrow svg {
+            width: 40px;
+            height: 40px;
+            fill: rgba(255, 255, 255, 0.7);
+        }
+        .dots {
+            color: #a5f3fc;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin: 0 5px;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 100px;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .copy-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm8.5-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zM10 20a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8zm0-2a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm8.5 0a1 1 0 0 1-1-1c0-2.344.673-4.78 2.074-6.182A7.98 7.98 0 0 1 22.5 12a1 1 0 1 1-2 0 5.982 5.982 0 0 0-2.182-4.182A5.982 5.982 0 0 0 14.5 9a1 1 0 1 1 0-2c2.343 0 4.78.673 6.182 2.074A7.98 7.98 0 0 1 22.5 15a1 1 0 0 1-1 1z"/>
+            </svg>
+        </div>
+        <h1>临时通道1</h1>
+        
+        <div class="instruction">点击下方按钮继续访问</div>
+        <a href="https://www.ohltk.com/" class="btn" id="accessBtn">立即访问</a>
+        
+        <div class="guide" id="wechatTip" style="display:none;">
+            <div class="arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M7.03 13.92a1 1 0 0 1-1.37-1.46l5-4.67a1 1 0 0 1 1.37 0l5 4.67a1 1 0 0 1-1.37 1.46L12 10.59l-4.97 3.33z"/>
+                </svg>
+            </div>
+            <div style="text-align:center; font-size:16px;">
+                点击右上角<span class="dots">...</span>，选择"在浏览器中打开"
+            </div>
+        </div>
+        
+        <div class="url">https://www.ohltk.com/</div>
+        <button class="copy-btn" onclick="copyUrl()">复制网址</button>
+    </div>
+    
+    <script>
+        // 检测是否在微信浏览器中打开
+        function isWechat() {
+            return /MicroMessenger/i.test(navigator.userAgent);
+        }
+        
+        // 复制网址到剪贴板
+        function copyUrl() {
+            const url = "https://www.ohltk.com/";
+            
+            // 创建临时输入框
+            const input = document.createElement('input');
+            input.value = url;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            
+            // 修改按钮文字
+            const btn = document.querySelector('.copy-btn');
+            const originalText = btn.textContent;
+            btn.textContent = '复制成功!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 1500);
+        }
+        
+        // 根据环境显示不同内容
+        window.onload = function() {
+            if (isWechat()) {
+                document.getElementById('wechatTip').style.display = 'block';
+            }
+            
+            // 非微信浏览器自动跳转
+            if (!isWechat()) {
+                let seconds = 3;
+                const btn = document.getElementById('accessBtn');
+                const updateBtn = () => {
+                    btn.textContent = `立即访问 ()`;
+                    if (seconds <= 0) {
+                        window.location.href = "https://www.ohltk.com/";
+                    } else {
+                        seconds--;
+                        setTimeout(updateBtn, 1000);
+                    }
+                };
+                updateBtn();
+            }
+        };
+    </script>
+</body>
+</html>
